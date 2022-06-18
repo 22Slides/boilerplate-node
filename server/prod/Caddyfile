@@ -1,0 +1,3 @@
+ethangulley.com, www.ethangulley.com {
+    reverse_proxy site:2000
+}

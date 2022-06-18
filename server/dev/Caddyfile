@@ -1,0 +1,3 @@
+dev.com {
+    reverse_proxy site:2000
+}

@@ -1,0 +1,29 @@
+version: '3.5'
+
+services:
+
+    site:
+        build: ./site
+        command: npm run ${ENV}
+        restart: unless-stopped
+        container_name: site
+        env_file:
+            - ./.env
+        depends_on:
+            - server
+        volumes:
+            - ./site:/app/site # local:container
+            - /app/site/node_modules # Exclude
+            - /app/site/dist # Exclude
+
+    server:
+        build: ./server
+        restart: unless-stopped
+        container_name: server
+        env_file:
+            - ./.env
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./server/caddy-${ENV}:/etc/caddy
