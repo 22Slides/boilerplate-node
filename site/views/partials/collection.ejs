@@ -1,26 +1,68 @@
-<section class="<%= section.type %>" id="<%= section.id %>">
+<section
+id="widget-<%= locals.id %>"
+class="widget collection collection--<%= locals.layout %>"
+data-id="<%= locals.id %>"
+data-layout="<%= locals.layout %>"
+data-widgettype="<%= locals.type %>"
+>
 
-	<% for (const content of section.contents) { %>
+	<div class="collection__container">
 
-		<figure id="<%= content._id %>">
+		<div class="collection__images">
+	
+			<% for (const item of locals.contents) { %>
 
-			<img
-			src="<%= content.src %>"
-			srcset="<%= content.srcset %>"
-			width="<%= content.width %>"
-			height="<%= content.height %>"
-			alt="<%= content.alt %>"
-			style="--focalpoint: <%= content.focalpoint %>">
+				<a href="/<%= item.slug %>"
+				title="<%= item.title %>"
+				id="thumb-<%= item._id %>"
+				class="collection__item
+					collection__item--<%= item.image?.orientation %>
+					<% if (item.image.dummy) { %>
+						collection__item--noimage
+					<% } else { %>
+						collection__item--image
+					<% } %>"
+				data-page="<%= item._id %>">
 
-			<% if (content.caption) { %>
-				<figcaption><%= content.caption %></figcaption>
+					<% if (item.image) { %>
+					
+						<div class="collection__imagecontainer <% if (item.image.dummy) { %>collection__imagecontainer--dummy<% } %>">
+			
+							<img
+							id="thumb-<%= item.image?._id %>-image"
+							class="collection__img autosizes-loading"
+							width="<%= item.image?.width %>"
+							height="<%= item.image?.height %>"
+							alt="<%= item.image?.alt %>"
+							loading="lazy"
+							src="<%= item.image?.src %>"
+							data-id="<%= item.image?._id %>"
+							data-dimensions="<%= item.image?.width %>x<%= item.image?.height %>"
+							<% if (item.image?.focalpoint) { %>
+								data-focalpoint="<%= item.image?.focalpoint %>"
+							<% } %>
+							data-sizes="auto"
+							data-filename="<%= item.image?.filename %>"
+							data-srcset="<%= item.image?.srcset %>"
+							>
+
+						</div>
+
+					<% } %>
+
+					<figcaption class="collection__caption">
+						<%= item.title %>
+						<% if (item.subtitle) { %>
+							<span class="collection__subcaption"><%= item.subtitle %></span>
+						<% } %>
+					</figcaption>
+		
+				</a>
+		
 			<% } %>
-
-		</figure>
-
-	<% } %>
+		
+		</div>
+		
+	</div>
 
 </section>
-
-
-
