@@ -1,0 +1,16 @@
+<section class="<%= section.type %>" id="<%= section.id %>">
+
+	<% for (const content of section.contents) { %>
+
+		<% log(content) %>
+
+		<div>
+			<%- content.text %>
+		</div>
+
+	<% } %>
+
+</section>
+
+
+

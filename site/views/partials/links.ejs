@@ -1,0 +1,73 @@
+<section
+id="widget-<%= locals.id %>"
+class="widget links links--<%= locals.layout %>"
+data-id="<%= locals.id %>"
+data-layout="<%= locals.layout %>"
+data-widgettype="<%= locals.type %>"
+>
+
+	<div class="data"></div>
+
+	<div class="links__container">
+
+		<div class="links__images">
+	
+			<% for (const item of locals.contents) { %>
+
+				<a href="<%= item.url %>"
+				title="<%= item.title %>"
+				id="thumb-<%= item._id %>"
+				class="links__item
+					links__item--<%= item.image?.orientation %>
+					<% if (item.image.dummy) { %>
+						links__item--noimage
+					<% } else { %>
+						links__item--image
+					<% } %>"
+				data-page="<%= item._id %>"
+				<% if (item.type === "link") { %>
+					data-link="true"
+				<% } %>>
+
+					<% if (item.image) { %>
+					
+						<div class="links__imagecontainer <% if (item.image.dummy) { %>links__imagecontainer--dummy<% } %>">
+			
+							<img
+							id="thumb-<%= item.image?._id %>-image"
+							class="links__img autosizes-loading"
+							width="<%= item.image?.width %>"
+							height="<%= item.image?.height %>"
+							alt="<%= item.image?.alt %>"
+							loading="lazy"
+							src="<%= item.image?.src %>"
+							data-id="<%= item.image?._id %>"
+							data-dimensions="<%= item.image?.width %>x<%= item.image?.height %>"
+							<% if (item.image?.focalpoint) { %>
+								data-focalpoint="<%= item.image?.focalpoint %>"
+							<% } %>
+							data-sizes="auto"
+							data-filename="<%= item.image?.filename %>"
+							data-srcset="<%= item.image?.srcset %>"
+							>
+
+						</div>
+
+					<% } %>
+
+					<figcaption class="links__caption">
+						<%= item.title %>
+						<% if (item.subtitle) { %>
+							<span class="links__subcaption"><%= item.subtitle %></span>
+						<% } %>
+					</figcaption>
+		
+				</a>
+		
+			<% } %>
+		
+		</div>
+		
+	</div>
+
+</section>

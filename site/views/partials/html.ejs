@@ -1,0 +1,15 @@
+<section
+id="widget-<%= locals.id %>"
+class="widget html"
+data-id="<%= locals.id %>"
+data-widgettype="<%= locals.type %>">
+		
+<% if (!locals.content || !locals.content.length) { %>
+<div class="html__container"><div class="html__placeholder">
+	<span>&lt;html&gt;</span>
+</div></div>
+<% } else { %>
+	<div class="html__container"><%- locals.content %></div>
+<% } %>
+	
+</section>

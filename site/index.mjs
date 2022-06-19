@@ -13,6 +13,7 @@ app.set('view engine', 'ejs')
 // Global variables
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 global.root = path.join(path.resolve(__dirname))
+global.log = (process.env.ENV === "dev" ? console.log : () => {})
 
 // Route: static files
 app.use('/dist', express.static('dist'))
@@ -23,20 +24,27 @@ app.get('/:slug?', async (req, res, next) => {
 	let { slug } = req.params
 	if (!slug) slug = ""
 	const url = `https://${process.env.TTS_URL}/api/${slug}`
-	const response = await fetch(url)
-	const data = await response.json()
-	const view = (fs.existsSync(path.join(global.root, 'views', `${slug}.ejs`)) ? slug : 'index')
-	res.render(view, data)
 
-	console.log({ url })
-	console.log(data.content)
+	try {
+		
+		const response = await fetch(url)
+		const data = await response.json()
+		const view = (fs.existsSync(path.join(global.root, 'views', `${slug}.ejs`)) ? slug : 'index')
+		res.render(view, data)
+		log({ url })
+		log(data.content)
+
+	} catch (error) {
+		console.log(error)
+	}
 
 })
 
 // Start server
 app.listen(process.env.PORT, process.env.HOST, () => {
-	console.log(`App listening on http://${process.env.HOST}:${process.env.PORT}`)
+	log(`App listening on http://${process.env.HOST}:${process.env.PORT}`)
 })
+
 
 
 
