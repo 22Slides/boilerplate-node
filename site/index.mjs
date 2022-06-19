@@ -11,8 +11,7 @@ const app = express()
 app.set('view engine', 'ejs')
 
 // Global variables
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 global.root = path.join(path.resolve(__dirname))
 
 // Route: static files
@@ -21,11 +20,16 @@ app.use('/dist', express.static('dist'))
 // Route: everything else
 app.get('/:slug?', async (req, res, next) => {
 
-	const { slug } = req.params
-	const data = await fetch(`https://${process.env.TTS_URL}/api/${slug}`)
-	log(data)
+	let { slug } = req.params
+	if (!slug) slug = ""
+	const url = `https://${process.env.TTS_URL}/api/${slug}`
+	const response = await fetch(url)
+	const data = await response.json()
 	const view = (fs.existsSync(path.join(global.root, 'views', `${slug}.ejs`)) ? slug : 'index')
 	res.render(view, data)
+
+	console.log({ url })
+	console.log(data.content)
 
 })
 
@@ -33,6 +37,9 @@ app.get('/:slug?', async (req, res, next) => {
 app.listen(process.env.PORT, process.env.HOST, () => {
 	console.log(`App listening on http://${process.env.HOST}:${process.env.PORT}`)
 })
+
+
+
 
 
 

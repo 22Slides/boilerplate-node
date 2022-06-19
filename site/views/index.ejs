@@ -1,11 +1,38 @@
-<%- include('partials/head') -%>
+<!doctype html>
+<html>
+<head>
 
-<h1>Hello</h1>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<title><%= locals.page.title %></title>
 
-<% console.log(locals) %>
+	<link href="/dist/styles/styles.css" rel="stylesheet">
+	<script src="/dist/scripts/events.js" type="module" defer></script>
 
-<% for (const item of locals.items) { %>
+</head>
+<body id="page-<%= locals.page.slug %>" class="loading">
+	
+	<h1><a href="/"><%= locals.site.title %></a></h1>
 
-<% } %>
+	<nav>
 
-<%- include('partials/foot') -%>
+		<ul>
+
+			<% for (const item of locals.nav) { %>
+				<li id="<%= item._id %>">
+					<a href="<%= item.href %>"><%= item.title %></a>
+				</li>
+			<% } %>
+
+		</ul>
+
+	</nav>
+
+	<% for (const section of locals.content) { %>
+		<%- include(`partials/${section.type}`, { section }) %>
+	<% } %>
+
+</body>
+</html>
+

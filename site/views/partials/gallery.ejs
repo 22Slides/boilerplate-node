@@ -1,0 +1,26 @@
+<section class="<%= section.type %>" id="<%= section.id %>">
+
+	<% for (const content of section.contents) { %>
+
+		<figure id="<%= content._id %>">
+
+			<img
+			src="<%= content.src %>"
+			srcset="<%= content.srcset %>"
+			width="<%= content.width %>"
+			height="<%= content.height %>"
+			alt="<%= content.alt %>"
+			style="--focalpoint: <%= content.focalpoint %>">
+
+			<% if (content.caption) { %>
+				<figcaption><%= content.caption %></figcaption>
+			<% } %>
+
+		</figure>
+
+	<% } %>
+
+</section>
+
+
+

@@ -4,5 +4,6 @@
 		"*.test.js",
 		"**/dist/**",
 		"**/src/**"
-	]
+	],
+	"ext": "js, ejs, mjs"
 }
