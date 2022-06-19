@@ -26,4 +26,4 @@ services:
             - 80:80
             - 443:443
         volumes:
-            - ./server/caddy-${ENV}:/etc/caddy
+            - ./server/${ENV}:/etc/caddy

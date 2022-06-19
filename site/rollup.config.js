@@ -47,7 +47,7 @@ function css(file, destination=false) {
 
 export default [
 	
-  js('./src/scripts/scripts.js'),
+	js('./src/scripts/events.js'),
 	css('./src/styles/styles.scss'),
 	
 ]
