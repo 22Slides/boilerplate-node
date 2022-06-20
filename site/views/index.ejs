@@ -30,6 +30,7 @@
 	</nav>
 
 	<% for (const section of locals.content) { %>
+		<% log(section) %>
 		<%- include(`partials/${section.type}`, { section }) %>
 	<% } %>
 
